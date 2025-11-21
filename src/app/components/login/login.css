@@ -1,0 +1,74 @@
+/* Custom styling for modern login form */
+
+:host ::ng-deep {
+  
+  /* Modern Input Styling Override */
+  .modern-input .mdc-text-field--outlined {
+    --mdc-outlined-text-field-container-shape: 12px;
+    --mdc-outlined-text-field-outline-color: #e2e8f0; /* slate-200 */
+    --mdc-outlined-text-field-focus-outline-color: #6366f1; /* indigo-500 */
+    --mdc-outlined-text-field-hover-outline-color: #94a3b8; /* slate-400 */
+    background-color: #ffffff;
+  }
+
+  /* Remove default background if any */
+  .modern-input .mdc-text-field {
+    background-color: transparent !important;
+  }
+
+  /* Adjust label color */
+  .modern-input .mdc-text-field:not(.mdc-text-field--disabled) .mdc-floating-label {
+    color: #64748b; /* slate-500 */
+  }
+
+  .modern-input .mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-floating-label {
+    color: #6366f1; /* indigo-500 */
+  }
+
+  /* Input text color */
+  .modern-input .mat-mdc-input-element {
+    color: #0f172a; /* slate-900 */
+    font-weight: 500;
+  }
+
+  /* Icon color */
+  .modern-input .mat-icon {
+    color: #94a3b8; /* slate-400 */
+  }
+  
+  .modern-input .mdc-text-field--focused .mat-icon {
+    color: #6366f1; /* indigo-500 */
+  }
+
+  /* Error state */
+  .modern-input.mat-form-field-invalid .mdc-notched-outline__leading,
+  .modern-input.mat-form-field-invalid .mdc-notched-outline__notch,
+  .modern-input.mat-form-field-invalid .mdc-notched-outline__trailing {
+    border-color: #ef4444 !important; /* red-500 */
+  }
+
+  .modern-input.mat-form-field-invalid .mdc-floating-label {
+    color: #ef4444 !important;
+  }
+
+  .modern-input .mat-mdc-form-field-error {
+    color: #ef4444 !important;
+    font-size: 0.75rem;
+    margin-top: 4px;
+  }
+
+  /* Button overrides are handled via !important in HTML classes for simplicity, 
+     but we can add specific focus states here if needed */
+}
+
+/* Smooth fade in for the page */
+:host {
+  display: block;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+

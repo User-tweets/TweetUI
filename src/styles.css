@@ -1,3 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "tailwindcss";
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Global Material error color override */
+.mat-error,
+.mat-mdc-form-field-error {
+  color: #be185d !important;
+  font-weight: 600 !important;
+}
+
+.mat-form-field-invalid .mat-error {
+  color: #be185d !important;
+}
+
