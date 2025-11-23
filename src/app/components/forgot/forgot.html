@@ -1,0 +1,181 @@
+<ngx-spinner
+  bdColor="rgba(15, 23, 42, 0.9)"
+  size="medium"
+  color="#6366f1"
+  type="ball-scale-multiple"
+  [fullScreen]="true"
+>
+  <p class="mt-4 font-medium tracking-wider text-white">Updating password...</p>
+</ngx-spinner>
+
+<div class="flex min-h-screen w-full bg-white">
+  <!-- Left Panel: Decorative & Branding (Hidden on mobile) -->
+  <div
+    class="relative hidden w-1/2 items-center justify-center overflow-hidden bg-slate-900 p-12 lg:flex"
+  >
+    <!-- Abstract Background Shapes -->
+    <div class="absolute top-0 left-0 z-0 h-full w-full overflow-hidden">
+      <div
+        class="absolute top-[-10%] left-[-10%] h-[500px] w-[500px] animate-pulse rounded-full bg-indigo-600/30 blur-[100px]"
+      ></div>
+      <div
+        class="absolute right-[-10%] bottom-[-10%] h-[600px] w-[600px] rounded-full bg-violet-600/20 blur-[120px]"
+      ></div>
+      <div
+        class="absolute top-[40%] left-[60%] h-[300px] w-[300px] rounded-full bg-fuchsia-500/20 blur-[80px]"
+      ></div>
+    </div>
+
+    <!-- Content -->
+    <div class="relative z-10 max-w-lg text-center">
+      <div
+        class="mb-8 inline-flex h-20 w-20 items-center justify-center rounded-2xl border border-indigo-500/30 bg-indigo-500/20 text-indigo-400 backdrop-blur-sm"
+      >
+        <mat-icon class="scale-150 text-4xl">lock_reset</mat-icon>
+      </div>
+      <h1 class="mb-6 text-5xl leading-tight font-bold tracking-tight text-white">
+        Secure your <br />
+        <span class="bg-gradient-to-r from-indigo-400 to-fuchsia-400 bg-clip-text text-transparent"
+          >Account</span
+        >
+      </h1>
+      <p class="text-lg leading-relaxed text-slate-400">
+        Don't worry, it happens to the best of us. Reset your password and get back to connecting
+        with the world.
+      </p>
+
+      <!-- Security Tips -->
+      <div class="mt-12 space-y-4 text-left">
+        <div
+          class="flex items-center gap-4 rounded-xl border border-slate-700/50 bg-slate-800/50 p-4 backdrop-blur-sm"
+        >
+          <div
+            class="flex h-10 w-10 items-center justify-center rounded-full bg-indigo-500/20 text-indigo-400"
+          >
+            <mat-icon>security</mat-icon>
+          </div>
+          <div>
+            <p class="font-medium text-white">Strong Passwords</p>
+            <p class="text-xs text-slate-400">Use a mix of letters, numbers & symbols</p>
+          </div>
+        </div>
+        <div
+          class="flex items-center gap-4 rounded-xl border border-slate-700/50 bg-slate-800/50 p-4 backdrop-blur-sm"
+        >
+          <div
+            class="flex h-10 w-10 items-center justify-center rounded-full bg-fuchsia-500/20 text-fuchsia-400"
+          >
+            <mat-icon>verified_user</mat-icon>
+          </div>
+          <div>
+            <p class="font-medium text-white">Two-Factor Auth</p>
+            <p class="text-xs text-slate-400">Enable 2FA for extra security</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Panel: Forgot Password Form -->
+  <div
+    class="relative flex w-full flex-col items-center justify-center bg-white p-8 sm:p-16 lg:w-1/2 lg:p-24"
+  >
+    <!-- Mobile Background Decoration -->
+    <div
+      class="absolute top-0 left-0 z-0 h-32 w-full bg-gradient-to-b from-indigo-50 to-white lg:hidden"
+    ></div>
+
+    <div class="z-10 w-full max-w-md">
+      <!-- Header -->
+      <div class="mb-12 text-center">
+        <h2 class="text-3xl font-bold tracking-tight text-slate-900">Reset Password</h2>
+        <p class="mt-2 text-slate-500">Enter your credentials to update your password.</p>
+      </div>
+
+      <form [formGroup]="credentials" (ngSubmit)="onSubmit()" class="space-y-8">
+        <!-- Username/Email -->
+        <app-input
+          label="Username / Email"
+          placeholder="Enter your username"
+          type="text"
+          icon="person"
+          [control]="userId"
+          errorMessage="Valid username required"
+        ></app-input>
+
+        <!-- Mobile Number -->
+        <app-input
+          label="Mobile Number"
+          placeholder="9876543210"
+          type="number"
+          icon="phone_iphone"
+          [control]="number"
+          errorMessage="Valid 10-digit number required"
+        ></app-input>
+
+        <!-- Old Password -->
+        <app-input
+          label="Old Password"
+          placeholder="••••••••"
+          type="password"
+          icon="lock_open"
+          [control]="old_password"
+          errorMessage="Old password required"
+        ></app-input>
+
+        <!-- New Password -->
+        <app-input
+          label="New Password"
+          placeholder="••••••••"
+          type="password"
+          icon="lock"
+          [control]="password"
+          errorMessage="Min 6 chars, max 12 chars"
+        ></app-input>
+
+        <!-- Confirm Password -->
+        <app-input
+          label="Confirm Password"
+          placeholder="••••••••"
+          type="password"
+          icon="lock_clock"
+          [control]="confirmPassword"
+          errorMessage="Confirm password required"
+        ></app-input>
+
+        <!-- Submit Button -->
+        <app-button
+          type="submit"
+          variant="primary"
+          [fullWidth]="true"
+          [disabled]="!credentials.valid"
+          class="mt-8"
+        >
+          Update Password
+        </app-button>
+
+        <!-- Links -->
+        <div class="mt-10 flex flex-col items-center space-y-4 text-sm text-slate-600">
+          <p>
+            Remember your password?
+            <a
+              routerLink="/"
+              class="ml-1 font-semibold text-indigo-600 transition-colors hover:text-indigo-500"
+            >
+              Login
+            </a>
+          </p>
+          <p>
+            Don't have an account?
+            <a
+              routerLink="/register"
+              class="ml-1 font-semibold text-indigo-600 transition-colors hover:text-indigo-500"
+            >
+              Register
+            </a>
+          </p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

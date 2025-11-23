@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Login_service, Credentials } from '../../services/login_service';
+import { AuthService } from '../../services/auth.service';
+import { Credentials } from '../../shared/models';
 import { NgxSpinnerComponent, NgxSpinnerService } from 'ngx-spinner';
 import { MatIcon } from '@angular/material/icon';
 import { ButtonComponent } from '../../shared/components/button/button.component';
@@ -13,7 +14,6 @@ import { CardComponent } from '../../shared/components/card/card.component';
   selector: 'app-login',
   standalone: true,
   imports: [
-    CommonModule,
     NgxSpinnerComponent,
     ReactiveFormsModule,
     RouterLink,
@@ -26,14 +26,11 @@ import { CardComponent } from '../../shared/components/card/card.component';
   styleUrl: './login.css',
 })
 export class Login {
+  private authService = inject(AuthService);
+  private spinner = inject(NgxSpinnerService);
+  private router = inject(Router);
 
-  constructor(
-    private loginService: Login_service,
-    private spinner: NgxSpinnerService,
-    private router: Router
-  ) { }
-
-  hide: boolean = true;
+  hide = true;
   credentials = new FormGroup({
     username: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [
@@ -55,21 +52,21 @@ export class Login {
 
     const credentials: Credentials = {
       username: this.credentials.value.username || '',
-      password: this.credentials.value.password || ''
+      password: this.credentials.value.password || '',
     };
 
-    this.loginService.getToken(credentials).subscribe({
-      next: (response: any) => {
+    this.authService.getToken(credentials).subscribe({
+      next: (response) => {
         localStorage.setItem('username', credentials.username);
         localStorage.setItem('token', response.token);
         this.spinner.hide();
         this.router.navigate(['/home']);
       },
-      error: (error) => {
+      error: (error: unknown) => {
         console.error(error);
         this.spinner.hide();
         alert('Invalid credentials');
-      }
+      },
     });
   }
 }
