@@ -1,7 +1,6 @@
 /* Custom styling for modern login form */
 
 :host ::ng-deep {
-  
   /* Modern Input Styling Override */
   .modern-input .mdc-text-field--outlined {
     --mdc-outlined-text-field-container-shape: 12px;
@@ -35,7 +34,7 @@
   .modern-input .mat-icon {
     color: #94a3b8; /* slate-400 */
   }
-  
+
   .modern-input .mdc-text-field--focused .mat-icon {
     color: #6366f1; /* indigo-500 */
   }
@@ -68,7 +67,12 @@
 }
 
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
-

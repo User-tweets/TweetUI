@@ -1,1 +1,72 @@
-<p>home works!</p>
+<div class="min-h-screen bg-slate-50 px-4 py-8 sm:px-6 lg:px-8">
+  <div class="mx-auto max-w-3xl space-y-6">
+    <!-- Header Section -->
+    <div class="mb-8 space-y-2 text-center">
+      <h1 class="text-4xl font-extrabold tracking-tight text-slate-900">
+        Welcome back,
+        <span
+          class="bg-gradient-to-r from-indigo-600 to-fuchsia-600 bg-clip-text text-transparent"
+          >{{ currentUser() }}</span
+        >
+      </h1>
+      <p class="font-medium text-slate-500">Your feed is ready.</p>
+    </div>
+
+    <!-- Create Tweet Section -->
+    <div
+      class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition-shadow hover:shadow-md"
+    >
+      <div class="flex gap-4">
+        <div class="flex-shrink-0">
+          <div
+            class="flex h-12 w-12 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-fuchsia-500 text-xl font-bold text-white shadow-md"
+          >
+            {{ currentUser().charAt(0).toUpperCase() }}
+          </div>
+        </div>
+        <div class="flex-grow space-y-3">
+          <textarea
+            [(ngModel)]="newTweetContent"
+            class="w-full resize-none rounded-xl border border-slate-200 bg-slate-50 p-4 font-medium text-slate-900 placeholder-slate-400 transition-all duration-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+            rows="3"
+            placeholder="What's on your mind?"
+          ></textarea>
+          <div class="flex justify-end">
+            <button
+              (click)="postTweet()"
+              [disabled]="!newTweetContent().trim()"
+              class="flex transform items-center gap-2 rounded-xl bg-indigo-600 px-6 py-2.5 font-semibold text-white shadow-sm transition-all duration-200 hover:bg-indigo-700 hover:shadow-md active:scale-95 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              <mat-icon class="text-sm">send</mat-icon>
+              <span>Post</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tweets Feed -->
+    <div class="space-y-5">
+      @if (tweets().length === 0) {
+        <div class="rounded-2xl border border-dashed border-slate-300 bg-white py-16 text-center">
+          <div
+            class="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-indigo-50"
+          >
+            <mat-icon class="text-3xl text-indigo-500">chat_bubble_outline</mat-icon>
+          </div>
+          <h3 class="text-xl font-bold text-slate-900">No tweets yet</h3>
+          <p class="mt-1 text-slate-500">Be the first to start the conversation!</p>
+        </div>
+      } @else {
+        @for (tweet of tweets(); track tweet.tweetId) {
+          <app-tweet-card
+            [tweet]="tweet"
+            [currentUser]="currentUser()"
+            (refreshNeeded)="loadTweets()"
+          >
+          </app-tweet-card>
+        }
+      }
+    </div>
+  </div>
+</div>

@@ -1,63 +1,68 @@
 <nav
-  class="sticky top-0 z-50 w-full bg-white/80 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all duration-300">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex justify-between items-center h-16">
-
+  class="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/80 shadow-sm backdrop-blur-md transition-all duration-300"
+>
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <div class="flex h-16 items-center justify-between">
       <!-- Logo Section -->
-      <div class="flex-shrink-0 flex items-center cursor-pointer" routerLink="/home">
+      <div class="flex flex-shrink-0 cursor-pointer items-center" routerLink="/home">
         <div
-          class="w-8 h-8 rounded-lg bg-gradient-to-br from-indigo-500 to-fuchsia-500 flex items-center justify-center mr-2 shadow-md">
-          <mat-icon class="text-white text-sm scale-75">hub</mat-icon>
+          class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-indigo-500 to-fuchsia-500 shadow-md"
+        >
+          <mat-icon class="scale-75 text-sm text-white">hub</mat-icon>
         </div>
         <span
-          class="font-bold text-xl tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-fuchsia-600">
+          class="bg-gradient-to-r from-indigo-600 to-fuchsia-600 bg-clip-text text-xl font-bold tracking-tight text-transparent"
+        >
           TweetUI
         </span>
       </div>
 
       <!-- Desktop Navigation -->
-      @if (isLoggedIn) {
-      <div class="hidden md:flex space-x-2 items-center">
-        <a routerLink="/home"
-          class="px-4 py-2 text-slate-600 hover:text-indigo-600 hover:bg-slate-100 rounded-xl transition-all flex items-center gap-2">
-          <mat-icon class="text-xl">home</mat-icon>
-          <span>Home</span>
-        </a>
+      @if (isLoggedIn()) {
+        <div class="hidden items-center space-x-2 md:flex">
+          <a
+            routerLink="/home"
+            class="flex items-center gap-2 rounded-xl px-4 py-2 text-slate-600 transition-all hover:bg-slate-100 hover:text-indigo-600"
+          >
+            <mat-icon class="text-xl">home</mat-icon>
+            <span>Home</span>
+          </a>
 
-        <a routerLink="/show-users"
-          class="px-4 py-2 text-slate-600 hover:text-indigo-600 hover:bg-slate-100 rounded-xl transition-all flex items-center gap-2">
-          <mat-icon class="text-xl">group</mat-icon>
-          <span>Explore</span>
-        </a>
-
-        <a routerLink="/postTweet"
-          class="px-4 py-2 text-slate-600 hover:text-indigo-600 hover:bg-slate-100 rounded-xl transition-all flex items-center gap-2">
-          <mat-icon class="text-xl">edit_note</mat-icon>
-          <span>Post</span>
-        </a>
-      </div>
+          <a
+            routerLink="/show-users"
+            class="flex items-center gap-2 rounded-xl px-4 py-2 text-slate-600 transition-all hover:bg-slate-100 hover:text-indigo-600"
+          >
+            <mat-icon class="text-xl">group</mat-icon>
+            <span>Explore</span>
+          </a>
+        </div>
       }
 
       <!-- User Actions -->
       <div class="flex items-center gap-3">
-        @if (isLoggedIn) {
-        <button mat-icon-button [matMenuTriggerFor]="userMenu"
-          class="!bg-slate-100 hover:!bg-slate-200 !text-slate-600 transition-colors">
-          <mat-icon>person</mat-icon>
-        </button>
-        <mat-menu #userMenu="matMenu" class="mt-2">
-          <button mat-menu-item (click)="logoutUser()">
-            <mat-icon class="text-rose-500">logout</mat-icon>
-            <span class="text-rose-600 font-medium">Sign out</span>
+        @if (isLoggedIn()) {
+          <button
+            mat-icon-button
+            [matMenuTriggerFor]="userMenu"
+            class="!bg-slate-100 !text-slate-600 transition-colors hover:!bg-slate-200"
+          >
+            <mat-icon>person</mat-icon>
           </button>
-        </mat-menu>
+          <mat-menu #userMenu="matMenu" class="mt-2">
+            <button mat-menu-item (click)="logoutUser()">
+              <mat-icon class="text-rose-500">logout</mat-icon>
+              <span class="font-medium text-rose-600">Sign out</span>
+            </button>
+          </mat-menu>
         } @else {
-        <a routerLink="/login" class="px-4 py-2 bg-indigo-600 text-white hover:bg-indigo-700 rounded-xl transition-all">
-          Sign In
-        </a>
+          <a
+            routerLink="/login"
+            class="rounded-xl bg-indigo-600 px-4 py-2 text-white transition-all hover:bg-indigo-700"
+          >
+            Sign In
+          </a>
         }
       </div>
-
     </div>
   </div>
 </nav>

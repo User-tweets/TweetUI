@@ -1,1 +1,158 @@
-<p>register works!</p>
+<ngx-spinner
+  bdColor="rgba(15, 23, 42, 0.9)"
+  size="medium"
+  color="#6366f1"
+  type="ball-scale-multiple"
+  [fullScreen]="true"
+>
+  <p class="mt-4 font-medium tracking-wider text-white">Creating your account...</p>
+</ngx-spinner>
+
+<div class="flex min-h-screen w-full bg-white">
+  <!-- Left Panel: Decorative & Branding (Hidden on mobile) -->
+  <div
+    class="relative hidden w-1/2 items-center justify-center overflow-hidden bg-slate-900 p-12 lg:flex"
+  >
+    <!-- Abstract Background Shapes -->
+    <div class="absolute top-0 left-0 z-0 h-full w-full overflow-hidden">
+      <div
+        class="absolute top-[-10%] left-[-10%] h-[500px] w-[500px] animate-pulse rounded-full bg-indigo-600/30 blur-[100px]"
+      ></div>
+      <div
+        class="absolute right-[-10%] bottom-[-10%] h-[600px] w-[600px] rounded-full bg-violet-600/20 blur-[120px]"
+      ></div>
+      <div
+        class="absolute top-[40%] left-[60%] h-[300px] w-[300px] rounded-full bg-fuchsia-500/20 blur-[80px]"
+      ></div>
+    </div>
+
+    <!-- Content -->
+    <div class="relative z-10 max-w-lg text-center">
+      <div
+        class="mb-8 inline-flex h-20 w-20 items-center justify-center rounded-2xl border border-indigo-500/30 bg-indigo-500/20 text-indigo-400 backdrop-blur-sm"
+      >
+        <mat-icon class="scale-150 text-4xl">rocket_launch</mat-icon>
+      </div>
+      <h1 class="mb-6 text-5xl leading-tight font-bold tracking-tight text-white">
+        Join the <br />
+        <span class="bg-gradient-to-r from-indigo-400 to-fuchsia-400 bg-clip-text text-transparent"
+          >Revolution</span
+        >
+      </h1>
+      <p class="text-lg leading-relaxed text-slate-400">
+        Create an account to connect with thousands of developers, share your ideas, and build the
+        future together.
+      </p>
+
+      <!-- Steps/Features -->
+      <div class="mt-12 grid grid-cols-3 gap-4 text-left">
+        <div class="rounded-xl border border-slate-700/50 bg-slate-800/50 p-4 backdrop-blur-sm">
+          <mat-icon class="mb-2 text-indigo-400">person_add</mat-icon>
+          <p class="text-sm font-medium text-slate-300">Sign Up</p>
+        </div>
+        <div class="rounded-xl border border-slate-700/50 bg-slate-800/50 p-4 backdrop-blur-sm">
+          <mat-icon class="mb-2 text-fuchsia-400">group</mat-icon>
+          <p class="text-sm font-medium text-slate-300">Connect</p>
+        </div>
+        <div class="rounded-xl border border-slate-700/50 bg-slate-800/50 p-4 backdrop-blur-sm">
+          <mat-icon class="mb-2 text-violet-400">share</mat-icon>
+          <p class="text-sm font-medium text-slate-300">Share</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right Panel: Register Form -->
+  <div
+    class="relative flex w-full flex-col items-center justify-center bg-white p-8 sm:p-16 lg:w-1/2 lg:p-24"
+  >
+    <!-- Mobile Background Decoration -->
+    <div
+      class="absolute top-0 left-0 z-0 h-32 w-full bg-gradient-to-b from-indigo-50 to-white lg:hidden"
+    ></div>
+
+    <div class="z-10 w-full max-w-md">
+      <!-- Header -->
+      <div class="mb-12 text-center">
+        <h2 class="text-3xl font-bold tracking-tight text-slate-900">Create Account</h2>
+        <p class="mt-2 text-slate-500">Enter your details to get started.</p>
+      </div>
+
+      <form [formGroup]="credentials" (ngSubmit)="onSubmit()" class="space-y-8">
+        <div class="grid grid-cols-2 gap-6">
+          <!-- First Name -->
+          <app-input
+            label="First Name"
+            placeholder="John"
+            type="text"
+            icon="badge"
+            [control]="firstName"
+            errorMessage="First Name required"
+          ></app-input>
+
+          <!-- Last Name -->
+          <app-input
+            label="Last Name"
+            placeholder="Doe"
+            type="text"
+            icon="badge"
+            [control]="lastName"
+            errorMessage="Last Name required"
+          ></app-input>
+        </div>
+
+        <!-- Email -->
+        <app-input
+          label="Email"
+          placeholder="john@example.com"
+          type="email"
+          icon="mail_outline"
+          [control]="username"
+          errorMessage="Valid email required"
+        ></app-input>
+
+        <!-- Password -->
+        <app-input
+          label="Password"
+          placeholder="••••••••"
+          type="password"
+          icon="lock_outline"
+          [control]="password"
+          errorMessage="Min 6 chars, max 12 chars"
+        ></app-input>
+
+        <!-- Mobile Number -->
+        <app-input
+          label="Mobile Number"
+          placeholder="9876543210"
+          type="number"
+          icon="phone_iphone"
+          [control]="number"
+          errorMessage="Valid 10-digit number required"
+        ></app-input>
+
+        <!-- Submit Button -->
+        <app-button
+          type="submit"
+          variant="primary"
+          [fullWidth]="true"
+          [disabled]="!credentials.valid"
+          class="mt-8"
+        >
+          Create Account
+        </app-button>
+
+        <!-- Login Link -->
+        <p class="mt-10 text-center text-sm text-slate-600">
+          Already have an account?
+          <a
+            routerLink="/"
+            class="ml-1 font-semibold text-indigo-600 transition-colors hover:text-indigo-500"
+          >
+            Sign in
+          </a>
+        </p>
+      </form>
+    </div>
+  </div>
+</div>

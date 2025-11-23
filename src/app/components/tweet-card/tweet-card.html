@@ -1,0 +1,151 @@
+<div
+  class="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:shadow-md"
+>
+  <!-- Tweet Header -->
+  <div class="p-6">
+    <div class="mb-3 flex items-start justify-between">
+      <div class="flex items-center gap-3">
+        <div
+          class="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-tr from-indigo-400 to-purple-400 font-bold text-white shadow-sm"
+        >
+          {{ tweet.username.charAt(0).toUpperCase() }}
+        </div>
+        <div>
+          <h3 class="text-base font-bold text-slate-900">{{ tweet.username }}</h3>
+          <span class="text-xs font-medium text-slate-500">{{ tweet.time }}</span>
+        </div>
+      </div>
+
+      @if (tweet.username === currentUser) {
+        <button
+          [matMenuTriggerFor]="menu"
+          class="rounded-full p-1 text-slate-400 transition-colors hover:bg-slate-100 hover:text-slate-600"
+        >
+          <mat-icon>more_horiz</mat-icon>
+        </button>
+        <mat-menu #menu="matMenu" class="custom-menu">
+          <button mat-menu-item (click)="startEdit()">
+            <mat-icon class="text-slate-600">edit</mat-icon>
+            <span class="text-slate-700">Edit</span>
+          </button>
+          <button mat-menu-item (click)="delete()">
+            <mat-icon class="text-rose-500">delete</mat-icon>
+            <span class="text-rose-600">Delete</span>
+          </button>
+        </mat-menu>
+      }
+    </div>
+
+    <!-- Content (View or Edit Mode) -->
+    @if (isEditing()) {
+      <div class="animate-in fade-in zoom-in mb-4 duration-200">
+        <textarea
+          [(ngModel)]="editContent"
+          class="w-full resize-none rounded-xl border border-indigo-300 bg-slate-50 p-3 text-slate-900 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+          rows="3"
+        ></textarea>
+        <div class="mt-2 flex justify-end gap-2">
+          <button
+            (click)="cancelEdit()"
+            class="rounded-lg px-3 py-1.5 text-sm font-medium text-slate-500 hover:bg-slate-100"
+          >
+            Cancel
+          </button>
+          <button
+            (click)="submitEdit()"
+            class="rounded-lg bg-indigo-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-indigo-700"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    } @else {
+      <p class="mb-4 text-lg leading-relaxed font-normal whitespace-pre-wrap text-slate-700">
+        {{ tweet.message }}
+      </p>
+    }
+
+    <!-- Actions -->
+    <div class="flex items-center gap-6 border-t border-slate-100 pt-4">
+      <button
+        (click)="like()"
+        class="group/like flex items-center gap-2 text-slate-500 transition-colors hover:text-rose-500"
+      >
+        <mat-icon
+          class="text-xl transition-transform group-active/like:scale-75"
+          [class.text-rose-500]="tweet.likes?.includes(currentUser)"
+        >
+          {{ tweet.likes?.includes(currentUser) ? 'favorite' : 'favorite_border' }}
+        </mat-icon>
+        <span class="text-sm font-medium">{{ tweet.likes?.length || 0 }}</span>
+      </button>
+
+      <button
+        (click)="toggleComments()"
+        class="flex items-center gap-2 text-slate-500 transition-colors hover:text-indigo-600"
+        [class.text-indigo-600]="showComments()"
+      >
+        <mat-icon class="text-xl">chat_bubble_outline</mat-icon>
+        <span class="text-sm font-medium">{{ tweet.comments?.length || 0 }}</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Inline Reply Input -->
+  @if (showComments()) {
+    <div
+      class="animate-in slide-in-from-top-2 border-t border-slate-100 bg-slate-50 p-4 duration-200"
+    >
+      <div class="flex gap-3">
+        <div
+          class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-fuchsia-500 text-xs font-bold text-white"
+        >
+          {{ currentUser.charAt(0).toUpperCase() }}
+        </div>
+        <div class="flex-grow">
+          <textarea
+            [(ngModel)]="replyContent"
+            class="w-full resize-none rounded-xl border border-slate-200 bg-white p-3 text-sm text-slate-900 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200"
+            rows="2"
+            placeholder="Write a reply..."
+          ></textarea>
+          <div class="mt-2 flex justify-end">
+            <button
+              (click)="submitReply()"
+              [disabled]="!replyContent().trim()"
+              class="rounded-lg bg-indigo-600 px-4 py-1.5 text-sm font-medium text-white hover:bg-indigo-700 disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              Reply
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- Comments Section -->
+  @if (showComments() && (tweet.comments?.length || 0) > 0) {
+    <div class="border-t border-slate-100 bg-slate-50/50 p-5">
+      <h4 class="mb-4 text-xs font-bold tracking-wider text-slate-400 uppercase">Comments</h4>
+      <div class="space-y-3">
+        @for (comment of tweet.comments; track $index) {
+          <div class="flex gap-3">
+            <div
+              class="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-slate-200 text-xs font-bold text-slate-600"
+            >
+              {{ comment.username.charAt(0).toUpperCase() }}
+            </div>
+            <div
+              class="flex-grow rounded-2xl rounded-tl-none border border-slate-100 bg-white p-3 shadow-sm"
+            >
+              <div class="mb-1 flex items-center justify-between">
+                <span class="text-sm font-bold text-slate-900">{{ comment.username }}</span>
+              </div>
+              <p class="text-sm text-slate-600">{{ comment.comment }}</p>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>
